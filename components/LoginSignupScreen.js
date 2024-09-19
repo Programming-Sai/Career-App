@@ -1,6 +1,40 @@
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, ImageBackground, ScrollView, Platform } from 'react-native';
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import { useEffect, useState } from 'react';
+
+
+// "andriod clientID": "454437600910-2i6ko04es0q6hj7f1titgprhu82fdtgb.apps.googleusercontent.com"
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginSignUp() {
+  const [userInfo, setUserInfo] = useState(null);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    "androidClientId": "454437600910-2i6ko04es0q6hj7f1titgprhu82fdtgb.apps.googleusercontent.com"
+  })
+
+  useEffect(()=>{
+    handleGoogleSignIn();
+  }, [response]);
+
+
+  const handleGoogleSignIn = async ()=> {
+    console.log("Process Started")
+    const token = response?.authentication?.accessToken;
+      if (response?.type == 'success' && token){
+        try{
+          res = await fetch("https://www.googleapis.com/userinfo/v2/me", {headers: {Authorization: `Bearer ${token}`},});
+          const user = await res.json();
+          setUserInfo(user);
+          console.log(userInfo)
+        }catch (e){
+
+        }
+      }
+  };
+
+
   return (
     <ImageBackground source={require('../assets/BG.jpg')} resizeMode='cover'  style={styles.container}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -32,7 +66,7 @@ export default function LoginSignUp() {
                     
                     
                     <View style={styles.oAuthImageLinks}>
-                      <TouchableOpacity onPress={()=>{console.log('Google')}} style={styles.oAuthButton}>
+                      <TouchableOpacity onPress={()=>{promptAsync()}} style={styles.oAuthButton}>
                         <Image source={require('../assets/Google.png')} style={[styles.oAuthImage, {width:'110%', height:'110%'}]} />
                       </TouchableOpacity>
                       <TouchableOpacity onPress={()=>{console.log('Github')}} style={styles.oAuthButton}>
