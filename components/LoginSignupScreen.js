@@ -27,13 +27,23 @@ export default function LoginSignUp() {
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.text}>Sign In</Text>
                     </TouchableOpacity>
-                    <View style={{position:'absolute', borderBottomWidth:1, top:"69%", width:'70%', borderBottomColor:"white"}}/>
+                    <View style={{position:'absolute', borderBottomWidth:1, top:"73%", width:'70%', borderBottomColor:"white"}}/>
                     <Text style={[ styles.text, {position:"relative", backgroundColor:'#746afc', padding:10, borderRadius:50} ]}>OR</Text>
+                    
+                    
                     <View style={styles.oAuthImageLinks}>
-                        <Image style={{width:'24%', aspectRatio:1}} resizeMode='contain' source={require('../assets/Google.png')} />
-                        <Image style={{width:'15%', aspectRatio:1}} resizeMode='contain' source={require('../assets/Github.png')} />
-                        <Image style={{width:'15%', aspectRatio:1}} resizeMode='contain' source={require('../assets/Facebook.png')} />
+                      <TouchableOpacity onPress={()=>{console.log('Google')}} style={styles.oAuthButton}>
+                        <Image source={require('../assets/Google.png')} style={[styles.oAuthImage, {width:'110%', height:'110%'}]} />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={()=>{console.log('Github')}} style={styles.oAuthButton}>
+                        <Image source={require('../assets/Github.png')} style={[styles.oAuthImage, {}]} />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={()=>{console.log('Facebook')}} style={styles.oAuthButton}>
+                        <Image source={require('../assets/Facebook.png')} style={[styles.oAuthImage, {}]} />
+                      </TouchableOpacity>
                     </View>
+
+
             </View>
         </View>
 
@@ -51,7 +61,7 @@ const styles = StyleSheet.create({
     flex:1
   },
   textContainer:{
-    marginBottom:"-25%"
+    // marginBottom:"-10%"
   },
   left: {
     width:'100%',
@@ -99,5 +109,16 @@ const styles = StyleSheet.create({
   },    
   text:{
     color:'white'
-  }
+  },
+  oAuthButton: {
+    height: 60,  
+    width: 60,   
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  oAuthImage: {
+    height: '80%',  
+    width: '80%',   
+    resizeMode: 'contain',  
+  },
 });
