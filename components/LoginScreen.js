@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function LoginSignUp() {
+export default function LoginScreen({ navigation }) {
   const [userInfo, setUserInfo] = useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     "androidClientId": "454437600910-2i6ko04es0q6hj7f1titgprhu82fdtgb.apps.googleusercontent.com"
@@ -34,6 +34,7 @@ export default function LoginSignUp() {
       }
   };
 
+  
 
   return (
     <ImageBackground source={require('../assets/BG.jpg')} resizeMode='cover'  style={styles.container}>
@@ -69,10 +70,10 @@ export default function LoginSignUp() {
                       <TouchableOpacity onPress={()=>{promptAsync()}} style={styles.oAuthButton}>
                         <Image source={require('../assets/Google.png')} style={[styles.oAuthImage, {width:'110%', height:'110%'}]} />
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={()=>{console.log('Github')}} style={styles.oAuthButton}>
+                      <TouchableOpacity onPress={()=>{navigation.navigate('Main')}} style={styles.oAuthButton}>
                         <Image source={require('../assets/Github.png')} style={[styles.oAuthImage, {}]} />
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={()=>{console.log('Facebook')}} style={styles.oAuthButton}>
+                      <TouchableOpacity onPress={()=>{navigation.navigate('Main')}} style={styles.oAuthButton}>
                         <Image source={require('../assets/Facebook.png')} style={[styles.oAuthImage, {}]} />
                       </TouchableOpacity>
                     </View>
