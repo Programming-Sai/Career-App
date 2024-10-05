@@ -1,25 +1,3 @@
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
-// import LoginScreen from './components/LoginScreen';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <StatusBar style="auto" />
-
-//       <LoginScreen />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1
-//   },
-// });
-
-
-
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,6 +6,7 @@ import LoginScreen from './components/LoginScreen';
 import HomeScreen from './components/HomeScreen';
 import ProfileScreen from './components/ProfileScreen';
 import SettingScreen from './components/SettingScreen';
+import Test from './components/Test';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import your desired icon set
 
 
@@ -61,8 +40,9 @@ const TabNavigator = () => {
       },
     })}
     >
-      <Tab.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
       <Tab.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
+      <Tab.Screen options={{ headerShown: false }} name="Test" component={Test} />
+      <Tab.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
       <Tab.Screen options={{ headerShown: false }} name="Settings" component={SettingScreen} />
     </Tab.Navigator>
   );
@@ -71,7 +51,7 @@ const TabNavigator = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Main">
         <Stack.Screen 
           name="Login" 
           component={LoginScreen} 
