@@ -1,21 +1,113 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Fragment } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, Animated } from 'react-native';
 
 const ProfileScreen = () => {
-    // const skills = ['Skill One', 'Skill Two', 'Skill Three'];
+    const scrollY = useRef(new Animated.Value(0)).current;
     const skills = ['Git', 'Bash', 'Python', 'JS', 'CSS'];
     
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.profileBox}>
-        <Image source={require('../assets/BG.jpg')} style={styles.profilePicture}/>
-        <Text style={styles.header}>Jon Snow</Text>
-        <View style={styles.skillContainer}>
-            <Text style={styles.skill}>
-                {skills.map((skill, i, arr) => (i < arr.length - 1 ? skill + '  ●  ' : skill))}
-            </Text>
-        </View>
-        <View style={styles.body}>
+    <View style={styles.container} >
+
+        <Animated.View style={[styles.profileBox, {
+            height: scrollY.interpolate({
+                inputRange: [0, 200],  // Scroll range
+                outputRange: ['40%', '13%'],  // Scale range (1x to 2x)
+                extrapolate: 'clamp',
+            }),
+        }]}>
+            <Animated.Image source={require('../assets/BG.jpg')} style={[styles.profilePicture,
+            {
+                transform: [
+                {
+                    scale: scrollY.interpolate({
+                    inputRange: [0, 200],  // Scroll range
+                    outputRange: [1, 0.3],  // Scale range (1x to 2x)
+                    extrapolate: 'clamp',
+                    }),
+                },
+                {
+                    translateX: scrollY.interpolate({
+                    inputRange: [0, 200],
+                    outputRange: [0, -450],  // Rotate from 0 to 360 degrees
+                    extrapolate: 'clamp',
+                    }),
+                },
+                {
+                    translateY: scrollY.interpolate({
+                    inputRange: [0, 200],
+                    outputRange: [0, -200],  // Rotate from 0 to 360 degrees
+                    extrapolate: 'clamp',
+                    }),
+                },
+                ],
+            },]}/>
+            <Animated.Text style={[styles.header, 
+            {
+                transform:[
+                    {
+                        translateX: scrollY.interpolate({
+                            inputRange: [0, 200],
+                            outputRange: [0, -50],  
+                            extrapolate: 'clamp',
+                        }),
+                    },{
+                        translateY: scrollY.interpolate({
+                            inputRange: [0, 200],
+                            outputRange: [0, -170],  
+                            extrapolate: 'clamp',
+                        }),
+                    },
+                ],
+                fontSize: scrollY.interpolate({
+                    inputRange: [0, 200],
+                    outputRange: [25, 18],  
+                    extrapolate: 'clamp',
+                }),
+                letterSpacing: scrollY.interpolate({
+                    inputRange: [0, 200],
+                    outputRange: [3, 0],  
+                    extrapolate: 'clamp',
+                }),
+            }
+                ]}>Jon Snow</Animated.Text>
+            <View style={styles.skillContainer}>
+                <Animated.Text style={[styles.skill, 
+            {
+                transform:[
+                    {
+                        translateX: scrollY.interpolate({
+                            inputRange: [0, 200],
+                            outputRange: [0, 0],  
+                            extrapolate: 'clamp',
+                        }),
+                    },{
+                        translateY: scrollY.interpolate({
+                            inputRange: [0, 200],
+                            outputRange: [0, -190],  
+                            extrapolate: 'clamp',
+                        }),
+                    },
+                ],
+                fontSize: scrollY.interpolate({
+                    inputRange: [0, 200],
+                    outputRange: [15, 10],  
+                    extrapolate: 'clamp',
+                }),
+                
+            }
+                ]}>
+                    {skills.map((skill, i, arr) => (i < arr.length - 1 ? skill + '  ●  ' : skill))}
+                </Animated.Text>
+            </View>
+        </Animated.View>
+
+        <Animated.ScrollView contentContainerStyle={styles.body} onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false }  
+        )}
+        scrollEventThrottle={16} 
+        >
+        {/* <View style={styles.body}> */}
             <Text>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -36,13 +128,12 @@ const ProfileScreen = () => {
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </Text>
-        </View>
+        </Animated.ScrollView>
        
-      </View>
+
       
       
-      {}
-    </ScrollView>
+    </View>
   );
 };
 
@@ -59,7 +150,7 @@ const styles = StyleSheet.create({
         borderRadius:100
     },
     profileBox:{
-        // borderWidth:1,
+        
         display:'flex',
         alignItems:'center'
     },
@@ -80,7 +171,8 @@ const styles = StyleSheet.create({
     body:{
         marginTop:'10%',
         paddingHorizontal:20,
-        paddingBottom:'20%'
+        paddingBottom:'40%',
+        // maxHeight: 200,
     }
 
 });
