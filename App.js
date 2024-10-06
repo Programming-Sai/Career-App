@@ -8,6 +8,7 @@ import ProfileScreen from './components/ProfileScreen';
 import SettingScreen from './components/SettingScreen';
 import Test from './components/Test';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import your desired icon set
+import { Provider as PaperProvider } from 'react-native-paper';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,8 @@ const TabNavigator = () => {
           iconName = focused ? 'person' : 'person-outline';
         } else if (route.name === 'Settings') {
           iconName = focused ? 'settings' : 'settings-outline';
+        } else if (route.name === 'Notifications') {
+          iconName = focused ? 'notifications' : 'notifications-outline';
         }
 
         // Return the icon component
@@ -36,12 +39,12 @@ const TabNavigator = () => {
       tabBarStyle: {
         backgroundColor: '#ffefff', // Change background color
         height: 60, // Change height of the tab bar
-        paddingBottom: 20, // Add padding at the bottom
+        paddingBottom: 10, // Add padding at the bottom
       },
     })}
     >
       <Tab.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
-      <Tab.Screen options={{ headerShown: false }} name="Test" component={Test} />
+      <Tab.Screen options={{ headerShown: false }} name="Notifications" component={Test} />
       <Tab.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
       <Tab.Screen options={{ headerShown: false }} name="Settings" component={SettingScreen} />
     </Tab.Navigator>
@@ -50,6 +53,8 @@ const TabNavigator = () => {
 
 const App = () => {
   return (
+    <PaperProvider>
+
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
         <Stack.Screen 
@@ -64,6 +69,9 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
+
+    </PaperProvider>
+
   );
 };
 

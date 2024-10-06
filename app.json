@@ -7,7 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "careerapp", 
+    "scheme": "careerapp",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -31,6 +31,9 @@
       "eas": {
         "projectId": "afb73db4-9db2-45e5-9436-af3eba05aa5a"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
