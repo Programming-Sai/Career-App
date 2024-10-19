@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Import your desired icon set
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, FlatList, Modal, Button, ImageBackground } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; 
 import { IconButton, Tooltip } from 'react-native-paper';
 
 
 
 const ProfileScreen = () => {
     const scrollY = useRef(new Animated.Value(0)).current;
+    const [modalVisible, setModalVisible] = useState(false);
     const skills = ['Git', 'Bash', 'Python', 'JS', 'CSS'];
-    const [visible, setVisible] = useState(false); // or whatever default value is needed
+    const [visible, setVisible] = useState(false); 
     const imageList = [
         {key:'1', image:require('../assets/BG.jpg')},
         {key:'2', image:require('../assets/BG.jpg')},
@@ -19,7 +20,7 @@ const ProfileScreen = () => {
 
     function renderItems({item}){
         return(
-        <TouchableOpacity style={{ paddingHorizontal: 5 }}>
+        <TouchableOpacity style={{ paddingHorizontal: 5 }} onPress={()=>{setModalVisible(true);console.log(modalVisible)}}>
             <Image source={item.image} style={{ width: 100, height: 100, borderRadius: 10, borderColor:"white", borderWidth:1 }} />
         </TouchableOpacity>
         )
@@ -119,67 +120,58 @@ const ProfileScreen = () => {
                     outputRange: [3, 0],  
                     extrapolate: 'clamp',
                 }),
-            }
-                ]}>Jon Snow</Animated.Text>
-            <View style={styles.skillContainer}>
-                <Animated.Text style={[styles.skill, 
-            {
-                transform:[
-                    {
-                        translateX: scrollY.interpolate({
-                            inputRange: [0, 200],
-                            outputRange: [0, 0],  
-                            extrapolate: 'clamp',
-                        }),
-                    },{
-                        translateY: scrollY.interpolate({
-                            inputRange: [0, 200],
-                            outputRange: [0, -190],  
-                            extrapolate: 'clamp',
-                        }),
-                    },
-                ],
-                fontSize: scrollY.interpolate({
-                    inputRange: [0, 200],
-                    outputRange: [15, 10],  
-                    extrapolate: 'clamp',
-                }),
-                
-            }
-                ]}>
-                    {skills.map((skill, i, arr) => (i < arr.length - 1 ? skill + '  ●  ' : skill))}
-                </Animated.Text>
-            </View>
-        </Animated.View>
+            }]}>Jon Snow</Animated.Text>
+                <View style={styles.skillContainer}>
+                    <Animated.Text style={[styles.skill, 
+                {
+                    transform:[
+                        {
+                            translateX: scrollY.interpolate({
+                                inputRange: [0, 200],
+                                outputRange: [0, 0],  
+                                extrapolate: 'clamp',
+                            }),
+                        },{
+                            translateY: scrollY.interpolate({
+                                inputRange: [0, 200],
+                                outputRange: [0, -190],  
+                                extrapolate: 'clamp',
+                            }),
+                        },
+                    ],
+                    fontSize: scrollY.interpolate({
+                        inputRange: [0, 200],
+                        outputRange: [15, 10],  
+                        extrapolate: 'clamp',
+                    }),
+                    
+                }
+                    ]}>
+                        {skills.map((skill, i, arr) => (i < arr.length - 1 ? skill + '  ●  ' : skill))}
+                    </Animated.Text>
+                </View>
+            </Animated.View>
 
         <Animated.ScrollView contentContainerStyle={styles.body} onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false }  
-        )}
-        scrollEventThrottle={16} 
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }  
+            )}
+            scrollEventThrottle={16} 
         >
-        {/* <View style={styles.body}> */}
-            {/* <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </Text> */}
-            
+            <Modal
+                animationType="slide" // or 'fade', 'none'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} 
+            >
+                <View style={styles.modalContainer}>
+                <ImageBackground style={styles.modalContent} source={require('../assets/BG.jpg')}>
+                    <Text>This is a Modal!</Text>
+                    <Button title="Close Modal" onPress={() => setModalVisible(false)} />
+                </ImageBackground>
+                </View>
+            </Modal>
+        
             <View style={styles.info}>
                <View style={styles.dataInfo}>
                     <Text style={styles.title}>Personal Information</Text>
@@ -216,7 +208,7 @@ const ProfileScreen = () => {
                     <Text style={styles.data}>N/A</Text>
 
                     <Text style={styles.label}>Field Of Study</Text>
-                    <Text style={styles.data}>Targearyan</Text>
+                    <Text style={styles.data}>N/A</Text>
 
                     <Text style={styles.label}>Graduaiton Year</Text>
                     <Text style={styles.data}>N/A</Text>
@@ -249,34 +241,40 @@ const ProfileScreen = () => {
                     <Text style={styles.title}>Career Path Recommendations</Text>
 
                     <Text style={styles.label}>Recommended Career Paths</Text>
-                    <Text style={styles.data}>Jon</Text>
+                    <FlatList 
+                        data={imageList}
+                        renderItem={renderItems}
+                        keyExtractor={(item)=>item.key}
+                        horizontal={true}                                                                              
+                        alwaysBounceHorizontal={true}
+                        contentContainerStyle={{ paddingVertical: 10 }} />
 
-                    <Text style={styles.label}>Details Button</Text>
-                    <Text style={styles.data}>Snow</Text>
+                    
                     {/* When the details button is clicked, it will open a modal that would show the details of the career prospect */}
                </View>
 
                <View style={styles.dataInfo}>
-                    <Text style={styles.title}>Internship Opportunities</Text>
-
-                    <Text style={styles.label}>Applied Internships</Text>
-                    <Text style={styles.data}>Jon</Text>
-
                     <Text style={styles.label}>Recommended Internships</Text>
-                    <Text style={styles.data}>Snow</Text>
-
-                    <Text style={styles.label}>Search & Filter Options</Text>
-                    <Text style={styles.data}>Snow</Text>
+                    <FlatList 
+                        data={imageList}
+                        renderItem={renderItems}
+                        keyExtractor={(item)=>item.key}
+                        horizontal={true}                                                                              
+                        alwaysBounceHorizontal={true}
+                        contentContainerStyle={{ paddingVertical: 10 }} />
                </View>
 
                <View style={styles.dataInfo}>
                     <Text style={styles.title}>Skill Development</Text>
 
                     <Text style={styles.label}>Recommended Courses</Text>
-                    <Text style={styles.data}>Jon</Text>
-
-                    <Text style={styles.label}>Progress Tracker</Text>
-                    <Text style={styles.data}>Snow</Text>
+                    <FlatList 
+                        data={imageList}
+                        renderItem={renderItems}
+                        keyExtractor={(item)=>item.key}
+                        horizontal={true}                                                                              
+                        alwaysBounceHorizontal={true}
+                        contentContainerStyle={{ paddingVertical: 10 }} />
                </View>
             </View>
         
@@ -349,7 +347,22 @@ const styles = StyleSheet.create({
     },
     dataInfo:{
         marginBottom: 20,
-    }
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+      },
+      modalContent: {
+        width: 300,
+        height: 300,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 });
 
 export default ProfileScreen;

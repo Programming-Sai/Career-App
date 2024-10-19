@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,7 +6,7 @@ import LoginScreen from './components/LoginScreen';
 import HomeScreen from './components/HomeScreen';
 import ProfileScreen from './components/ProfileScreen';
 import SettingScreen from './components/SettingScreen';
-import Test from './components/Test';
+import NotificationScreen from './components/NotificationScreen';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import your desired icon set
 import { Provider as PaperProvider } from 'react-native-paper';
 
@@ -15,12 +15,13 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  const [notificationCount, setNotificationCount] = useState(16); // Example notification count
+
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
-        // Define icon name based on the route
         if (route.name === 'Home') {
           iconName = focused ? 'home' : 'home-outline';
         } else if (route.name === 'Profile') {
@@ -31,21 +32,25 @@ const TabNavigator = () => {
           iconName = focused ? 'notifications' : 'notifications-outline';
         }
 
-        // Return the icon component
         return <Icon name={iconName} size={size} color={color} />;
       },
-      tabBarActiveTintColor: 'purple', // Active icon color
+      tabBarActiveTintColor: 'purple', 
       tabBarInactiveTintColor: 'purple', 
       tabBarStyle: {
-        backgroundColor: '#ffefff', // Change background color
-        height: 60, // Change height of the tab bar
-        paddingBottom: 10, // Add padding at the bottom
+        backgroundColor: '#ffefff', 
+        height: 60, 
+        paddingBottom: 10, 
+      },
+      tabBarBadge: route.name === 'Notifications' ? notificationCount > 0 ? notificationCount : null : null, // Show badge only for Notifications tab
+      tabBarBadgeStyle: {
+        backgroundColor: '#B57EDD',
+        color: 'white',
       },
     })}
     >
-      <Tab.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
-      <Tab.Screen options={{ headerShown: false }} name="Notifications" component={Test} />
       <Tab.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
+      <Tab.Screen options={{ headerShown: false }} name="Notifications" component={NotificationScreen} />
+      <Tab.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
       <Tab.Screen options={{ headerShown: false }} name="Settings" component={SettingScreen} />
     </Tab.Navigator>
   );
