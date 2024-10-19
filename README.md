@@ -10,5 +10,6 @@
 
 ![Login Screen](./assets/Screenshot.jpg)
 ![Profile Screen](./assets/profileScreenshot.jpg)
+![Profile Screen](./assets/notificationScreenshot.jpg)
 
 
